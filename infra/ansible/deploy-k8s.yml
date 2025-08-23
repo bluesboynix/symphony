@@ -12,4 +12,6 @@
 
     - name: Apply Kubernetes manifest
       command: kubectl apply -f /home/admin/symphony/k8s/symphony.yaml --validate=false
+      environment:  
+        KUBECONFIG: /home/admin/.kube/config
 
