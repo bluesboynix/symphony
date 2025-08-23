@@ -1,0 +1,59 @@
+---
+- name: Deploy Symphony App on Debian 13
+  hosts: appserver
+  become: yes
+  vars:
+    repo_url: "https://github.com/bluesboynix/symphony.git"
+    app_dir: "/home/admin/symphony"
+
+  tasks:
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: yes
+
+    - name: Install required packages
+      ansible.builtin.apt:
+        name:
+          - git
+          - curl
+          - wget
+          - build-essential
+          - ca-certificates
+        state: present
+
+    - name: Install Docker
+      ansible.builtin.apt:
+        name: docker.io
+        state: present
+
+    - name: Ensure Docker service is running
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Install Go 1.24
+      ansible.builtin.shell: |
+        wget https://golang.org/dl/go1.24.linux-amd64.tar.gz -O /tmp/go1.24.tar.gz
+        rm -rf /usr/local/go
+        tar -C /usr/local -xzf /tmp/go1.24.tar.gz
+      args:
+        creates: /usr/local/go/bin/go
+
+    - name: Add Go to PATH
+      ansible.builtin.lineinfile:
+        path: /home/admin/.profile
+        line: 'export PATH=$PATH:/usr/local/go/bin'
+        state: present
+
+    - name: Clone Symphony repository
+      ansible.builtin.git:
+        repo: "{{ repo_url }}"
+        dest: "{{ app_dir }}"
+        version: main
+        force: yes
+
+    - name: Run deployment script
+      ansible.builtin.shell: |
+        chmod +x {{ app_dir }}/scripts/deploy.sh
+        {{ app_dir }}/scripts/deploy.sh
