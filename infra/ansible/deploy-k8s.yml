@@ -1,17 +1,39 @@
 ---
 - name: Deploy Symphony on Kubernetes locally
-  hosts: appserver
-  become: true
+  hosts: localhost
+  connection: local
+  become: yes
+
+  vars:
+    kubeconfig_path: /home/admin/.kube/config
+    manifest_path: /home/admin/symphony/k8s/symphony.yaml
 
   tasks:
     - name: Ensure kubectl is installed
-      apt:
+      package:
         name: kubectl
         state: present
         update_cache: yes
 
+    - name: Wait for kube-apiserver to be ready
+      command: kubectl get nodes --kubeconfig {{ kubeconfig_path }}
+      register: result
+      retries: 10
+      delay: 6
+      until: result.rc == 0
+
     - name: Apply Kubernetes manifest
-      command: kubectl apply -f /home/admin/symphony/k8s/symphony.yaml --validate=false
-      environment:  
-        KUBECONFIG: /home/admin/.kube/config
+      command: kubectl apply -f {{ manifest_path }} --validate=false
+      environment:
+        KUBECONFIG: "{{ kubeconfig_path }}"
+
+    - name: Verify deployments
+      command: kubectl get deployments -A
+      environment:
+        KUBECONFIG: "{{ kubeconfig_path }}"
+      register: deployments
+
+    - name: Show deployments
+      debug:
+        var: deployments.stdout
 
