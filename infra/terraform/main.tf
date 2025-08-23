@@ -177,11 +177,16 @@ resource "aws_security_group" "k8s" {
 # --------------------------
 resource "aws_instance" "app_server" {
   ami                         = "ami-0b5317ee10bd261f7" # Debian 13 ap-south-1
-  instance_type               = "t2.micro"
+  instance_type               = "t3a.small"
   subnet_id                   = aws_subnet.main.id
   vpc_security_group_ids      = [aws_security_group.sg.id, aws_security_group.k8s.id]
   associate_public_ip_address = true
   key_name                    = "symphony"   # <-- must exist in AWS console
+
+  root_block_device {         # add if you want to explicitly define storage
+    volume_size = 20
+    volume_type = "gp3"
+  }
 
   tags = {
     Name = "terraform-ec2"
