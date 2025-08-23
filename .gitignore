@@ -1,0 +1,46 @@
+# Binaries and build artifacts
+symphony
+*.exe
+*.out
+*.o
+*.so
+
+# Go build cache
+*.log
+*.test
+*.tmp
+*.swp
+
+# Vendor
+/vendor/
+
+# IDE/editor files
+.vscode/
+.idea/
+*.iml
+*.DS_Store
+
+# Terraform files
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Ansible
+*.retry
+
+# Docker
+*.tar
+*.pid
+*.seed
+docker-compose.override.yml
+
+# Logs
+*.log
+logs/
+
