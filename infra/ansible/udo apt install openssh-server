@@ -1,0 +1,207 @@
+[32mbackuppc[0m/stable 4.4.0-11 amd64
+  high-performance, enterprise-grade system for backing up PCs
+
+[32mcme[0m/stable 1.041-1 all
+  Check or edit configuration data with Config::Model
+
+[32mconnect-proxy[0m/stable 1.105-2 amd64
+  Establish TCP connection using SOCKS4/5 or HTTP tunnel
+
+[32mdebian-goodies[0m/stable 0.88.2 all
+  Small toolbox-style utilities for Debian systems
+
+[32mdiffoscope[0m/stable 297 all
+  in-depth visual diff tool for files, archives and directories
+
+[32mdiffoscope-minimal[0m/stable 297 all
+  in-depth visual diff tool for files, archives and directories (minimal package)
+
+[32mfwknop-apparmor-profile[0m/stable 2.6.11-2 all
+  FireWall KNock OPerator - Apparmor profile
+
+[32mfwknop-client[0m/stable 2.6.11-2+b1 amd64
+  FireWall KNock OPerator client side - C version
+
+[32mfwknop-server[0m/stable 2.6.11-2+b1 amd64
+  FireWall KNock OPerator server side - C version
+
+[32mgesftpserver[0m/stable 2~ds-1 amd64
+  sftp server submodule for OpenSSH
+
+[32mgolang-github-calmh-randomart-dev[0m/stable 1.1.0-2 all
+  generates OpenSSH-style randomart (Go library)
+
+[32mgolang-github-mikesmitty-edkey-dev[0m/stable 0.0~git20170222.3356ea4-2 all
+  generates ED25519 private keys in the OpenSSH private key format (Go library)
+
+[32mgolang-github-skeema-knownhosts-dev[0m/stable 1.3.0-1 all
+  Go SSH known_hosts wrapper with host key lookup (library)
+
+[32mgolang-github-tillitis-tkey-ssh-agent-dev[0m/stable 1.0.0+ds-4 all
+  SSH Agent for Tillitis TKey (Go development library)
+
+[32mkeychain[0m/stable 2.8.5-5 all
+  key manager for OpenSSH
+
+[32mkwalletcli[0m/stable 3.03-1+b1 amd64
+  command line interface to the KDE Wallet
+
+[32mlacme[0m/stable 0.8.3-1 all
+  ACME client written with process isolation and minimal privileges in mind
+
+[32mlacme-accountd[0m/stable 0.8.3-1 all
+  lacme account key manager
+
+[32mlibconfig-model-cursesui-perl[0m/stable 1.107-2 all
+  curses interface to edit config data through Config::Model
+
+[32mlibconfig-model-openssh-perl[0m/stable 2.9.9.1-1 all
+  configuration editor for OpenSsh
+
+[32mlibconfig-model-tkui-perl[0m/stable 1.379-1 all
+  Tk GUI to edit config data through Config::Model
+
+[32mlibfko-doc[0m/stable 2.6.11-2 all
+  FireWall KNock OPerator - documentation
+
+[32mlibfko-perl[0m/stable 2.6.11-2+b1 amd64
+  FireWall KNock OPerator - Perl module
+
+[32mlibfko3-dev[0m/stable 2.6.11-2+b1 amd64
+  FireWall KNock OPerator - development library
+
+[32mlibfko3t64[0m/stable 2.6.11-2+b1 amd64
+  FireWall KNock OPerator - shared library
+
+[32mlibjsch-agent-proxy-java[0m/stable 0.0.9-1 all
+  Proxy to ssh-agent and Pageant in Java
+
+[32mlibnet-openssh-compat-perl[0m/stable 0.09-2 all
+  collection of compatibility modules for Net::OpenSSH
+
+[32mlibnet-openssh-parallel-perl[0m/stable 0.12-1.1 all
+  run SSH jobs in parallel
+
+[32mlibnet-openssh-perl[0m/stable 0.84-1 all
+  Perl SSH client package implemented on top of OpenSSH
+
+[32mlibnet-sftp-foreign-perl[0m/stable 1.93+dfsg-1 all
+  client for the Secure File Transfer Protocol
+
+[32mlibnet-sftp-sftpserver-perl[0m/stable 1.1.0-7 all
+  Secure File Transfer Protocol Server
+
+[32mlibntruprime1[0m/stable 0~20241021-2 amd64
+  microlibrary for Streamlined NTRU Prime - shared library
+
+[32mlibpam-ssh[0m/stable 2.3+ds-8 amd64
+  Authenticate using SSH keys
+
+[32mlibrust-non-zero-byte-slice-dev[0m/stable 0.1.0-1+b2 amd64
+  Openssh mux client - Rust source code
+
+[32mlibrust-openssh-dev[0m/stable 0.11.0-1 amd64
+  SSH through OpenSSH - Rust source code
+
+[32mlibrust-openssh-keys-dev[0m/stable 0.6.2-2 amd64
+  Read and write OpenSSH public keys - Rust source code
+
+[32mlibrust-openssh-mux-client-dev[0m/stable 0.17.5-1 amd64
+  Openssh mux client - Rust source code
+
+[32mlibrust-openssh-mux-client-error-dev[0m/stable 0.1.0-1+b3 amd64
+  Openssh mux client - Rust source code
+
+[32mlibrust-openssh-sftp-error-dev[0m/stable 0.5.1-1+b1 amd64
+  Error type used when communicating with openssh sftp server - Rust source code
+
+[32mlibrust-openssh-sftp-protocol-dev[0m/stable 0.24.0-1+b2 amd64
+  Data format used to communicate with openssh mux server - Rust source code
+
+[32mlibrust-openssh-sftp-protocol-error-dev[0m/stable 0.1.0-1+b2 amd64
+  Data format used to communicate with openssh mux server - Rust source code
+
+[32mlibrust-ssh-format-dev[0m/stable 0.14.1-1+b3 amd64
+  Data format used to communicate with openssh mux server - Rust source code
+
+[32mlibrust-ssh-format-error-dev[0m/stable 0.1.0-1+b2 amd64
+  Data format used to communicate with openssh mux server - Rust source code
+
+[32mlibrust-sshkeys-dev[0m/stable 0.3.2-2 amd64
+  Parsing OpenSSH certificates and public keys - Rust source code
+
+[32mlibtrilead-putty-extension-java[0m/stable 1.2-2 all
+  PuTTY key support for Trilead SSH2 library
+
+[32mlogin-duo[0m/stable 1.11.3-1.2+b1 amd64
+  login wrapper for Duo Security two-factor authentication
+
+[32mlxqt-openssh-askpass[0m/stable 2.1.0-1 amd64
+  OpenSSH user/password GUI dialog for LXQt
+
+[32mlxqt-openssh-askpass-l10n[0m/stable 2.1.0-1 all
+  Language package for lxqt-openssh-askpass
+
+[32mmysecureshell[0m/stable 2.00+dfsg-1 amd64
+  SFTP Server with ACL
+
+[32mnode-sshpk[0m/stable 1.17.0+dfsg-2 all
+  library for finding and using SSH public keys
+
+[32mopenssh-client[0m/stable,now 1:10.0p1-7 amd64 [installed,automatic]
+  secure shell (SSH) client, for secure access to remote machines
+
+[32mopenssh-client-gssapi[0m/stable 1:10.0p1-7 all
+  secure shell (SSH) client, with GSS-API support
+
+[32mopenssh-client-ssh1[0m/stable 1:7.5p1-17 amd64
+  secure shell (SSH) client for legacy SSH1 protocol
+
+[32mopenssh-known-hosts[0m/stable 0.6.3-1 all
+  download, filter and merge known_hosts for OpenSSH
+
+[32mopenssh-server[0m/stable,now 1:10.0p1-7 amd64 [installed]
+  secure shell (SSH) server, for secure access from remote machines
+
+[32mopenssh-server-gssapi[0m/stable 1:10.0p1-7 all
+  secure shell (SSH) server, with GSS-API key exchange
+
+[32mopenssh-sftp-server[0m/stable,now 1:10.0p1-7 amd64 [installed,automatic]
+  secure shell (SSH) sftp server module, for SFTP access from remote machines
+
+[32mopenssh-tests[0m/stable 1:10.0p1-7 amd64
+  OpenSSH regression tests
+
+[32mputty-tools[0m/stable 0.83-3 amd64
+  command-line tools for SSH, SCP, and SFTP
+
+[32mpython3-asyncssh[0m/stable 2.20.0-1 all
+  asyncio-based client and server implementation of SSHv2 protocol
+
+[32mpython3-scp[0m/stable 0.15.0-1 all
+  scp module for paramiko (Python 3)
+
+[32mpython3-setproctitle[0m/stable 1.3.6-2 amd64
+  Setproctitle implementation for Python 3
+
+[32mpython3-sshpubkeys[0m/stable 3.3.1-1 all
+  SSH public key parser - Python 3
+
+[32msecpanel[0m/stable 1:0.6.1-3 all
+  graphical user interface for SSH and SCP
+
+[32mssh[0m/stable 1:10.0p1-7 all
+  secure shell client and server (metapackage)
+
+[32mssh-askpass-gnome[0m/stable 1:10.0p1-7 amd64
+  interactive X program to prompt users for a passphrase for ssh-add
+
+[32mssh-audit[0m/stable 3.3.0-2 all
+  tool for ssh server & client auditing
+
+[32msshpass[0m/stable 1.10-0.1 amd64
+  Non-interactive ssh password authentication
+
+[32mtkey-ssh-agent[0m/stable 1.0.0+ds-4+b2 amd64
+  SSH Agent for Tillitis TKey (application)
+
