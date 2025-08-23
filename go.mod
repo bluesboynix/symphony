@@ -1,3 +1,4 @@
-module devops-project
+module github.com/bluesboynix/symphony
 
 go 1.24
+
