@@ -1,0 +1,53 @@
+---
+- name: Deploy Symphony App on terraform-ec2
+  hosts: appserver
+  become: true
+
+  vars:
+    repo_url: "https://github.com/bluesboynix/symphony.git"
+    app_dir: "/home/admin/symphony"
+
+  tasks:
+    - name: Ensure required packages are installed
+      apt:
+        name:
+          - git
+          - golang
+          - docker.io
+        state: present
+        update_cache: yes
+
+    - name: Ensure Docker service is running
+      service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Clone the Symphony repo
+      git:
+        repo: "{{ repo_url }}"
+        dest: "{{ app_dir }}"
+        version: main
+        force: yes
+
+    - name: Build Docker image
+      community.docker.docker_image:
+        name: symphony
+        build:
+          path: "{{ app_dir }}"
+        source: build
+
+    - name: Stop existing container if running
+      community.docker.docker_container:
+        name: symphony-container
+        state: absent
+
+    - name: Run Symphony container
+      community.docker.docker_container:
+        name: symphony-container
+        image: symphony:latest
+        state: started
+        restart_policy: always
+        published_ports:
+          - "8080:8080"
+
