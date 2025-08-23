@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: symphony
-        image: bluesboynix/symphony:latest   # <-- your Docker Hub image
+        image: bluesboynix/symphony:latest
         ports:
         - containerPort: 8080
 ---
@@ -29,5 +29,5 @@ spec:
   ports:
     - port: 8080
       targetPort: 8080
-      nodePort: 30080   # fixed NodePort
+      nodePort: 30080
 
