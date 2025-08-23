@@ -1,0 +1,125 @@
+0) Become root (optional)
+sudo -i
+---------------------------
+1) Kernel modules + sysctl (networking for K8s)
+
+cat <<'EOF' >/etc/modules-load.d/k8s.conf
+overlay
+br_netfilter
+EOF
+modprobe overlay
+modprobe br_netfilter
+
+cat <<'EOF' >/etc/sysctl.d/99-kubernetes-cri.conf
+net.bridge.bridge-nf-call-iptables = 1
+net.bridge.bridge-nf-call-ip6tables = 1
+net.ipv4.ip_forward = 1
+EOF
+sysctl --system
+--------------------
+2) Install & configure containerd (K8s runtime)
+
+apt update
+apt install -y containerd
+
+# Generate default config and switch to systemd cgroups
+mkdir -p /etc/containerd
+containerd config default >/etc/containerd/config.toml
+sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
+
+systemctl enable --now containerd
+
+Docker can stay installed (for builds). Kubelet will talk directly to containerd.
+--------------------------
+3) Disable swap (required)
+
+swapoff -a
+sed -i.bak '/\sswap\s/s/^/#/' /etc/fstab
+-------------------
+4) Install kubeadm, kubelet, kubectl (Kubernetes 1.31 stable)
+
+install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.31/deb/Release.key \
+  | gpg --dearmor -o /etc/apt/keyrings/kubernetes-archive-keyring.gpg
+
+echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] \
+https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /' \
+  >/etc/apt/sources.list.d/kubernetes.list
+
+or
+
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-archive-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.31/deb/ /" \
+  | sudo tee /etc/apt/sources.list.d/kubernetes.list > /dev/null
+
+
+apt update
+apt install -y kubelet kubeadm kubectl
+apt-mark hold kubelet kubeadm kubectl
+systemctl enable kubelet
+--------------------------
+5) Initialize the cluster (single node)
+kubeadm init \
+  --pod-network-cidr=10.244.0.0/16 \
+  --cri-socket=unix:///run/containerd/containerd.sock
+
+or
+
+sudo kubeadm init \
+  --pod-network-cidr=10.244.0.0/16 \
+  --cri-socket=unix:///run/containerd/containerd.sock \
+  --ignore-preflight-errors=NumCPU,Mem
+
+
+Save the kubeadm join ... it prints (for future workers, if any).
+--------------------------
+6) Configure kubectl for your user
+
+# if you’re still root:
+mkdir -p $HOME/.kube
+cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+chown $(id -u):$(id -g) $HOME/.kube/config
+-----------------------------
+7) Install CNI (Flannel)
+
+kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
+-----------------------
+8) Allow workloads on the control-plane (single-node trick)
+
+kubectl taint nodes --all node-role.kubernetes.io/control-plane- || true
+
+
+checking:
+kubectl describe node $(hostname) | grep Taints
+
+If it shows Taints: <none>, then you don’t need to run the untaint command — your control-plane is already schedulable for workloads (pods can run there).
+
+if seen something
+kubectl taint nodes $(hostname) node-role.kubernetes.io/control-plane:NoSchedule-
+
+-----------------------
+9) Verify
+
+kubectl get nodes
+kubectl get pods -A
+----------------------------
+(Optional) Quick app test via NodePort
+
+This proves networking + your SG rules work.
+
+kubectl create deployment hello --image=nginx --port=80
+kubectl expose deployment hello --type=NodePort --port=80
+kubectl get svc hello -o wide
+
+Note the NODE-PORT (e.g., 3xxxx).
+
+Open in browser: http://<EC2_PUBLIC_IP>:<NODE-PORT> (your Terraform SG already allows 30000–32767).
+---------------------------------------------------------
+If something errors
+
+Reset and retry init:
+kubeadm reset -f
+rm -rf ~/.kube
+systemctl restart containerd
+
+Then re-run steps 5–9.
+-------------------------------------------

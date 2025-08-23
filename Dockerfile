@@ -1,26 +1,17 @@
-# Use Go 1.24 Alpine image
-FROM golang:1.24-alpine
-
-# Set working directory
+# Stage 1: Build
+FROM golang:1.24-alpine AS builder
 WORKDIR /app
-
-# Copy go.mod and go.sum for dependency resolution
 COPY go.mod ./
-
-# Download dependencies
+COPY go.sum ./
 RUN go mod download
+COPY *.go ./templates ./static ./
+RUN go build -o symphony
 
-# Copy application source code
-COPY *.go ./
-COPY templates/ ./templates/
-COPY static/ ./static/
-
-# Build the Go application with the project name 'symphony'
-RUN go build -o /symphony
-
-# Expose application port
+# Stage 2: Run
+FROM alpine:latest
+WORKDIR /app
+COPY --from=builder /app/symphony /symphony
+COPY --from=builder /app/templates ./templates
+COPY --from=builder /app/static ./static
 EXPOSE 8080
-
-# Run the built binary
 CMD ["/symphony"]
-
