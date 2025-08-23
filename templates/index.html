@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Title}}</title>
+    <script src="https://unpkg.com/htmx.org@1.9.6"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        .info {
+            background: #e9ecef;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 200px;
+        }
+        button {
+            padding: 10px 15px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #f8f9fa;
+        }
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>{{.Title}}</h1>
+        
+        <div class="info">
+            <p><strong>Host:</strong> {{.Hostname}}</p>
+            <p><strong>Started:</strong> {{.Timestamp}}</p>
+        </div>
+        
+        <p>{{.Message}}</p>
+        
+        <div>
+            <input type="text" id="name" placeholder="Enter your name">
+            <button hx-get="/api/message" 
+                    hx-target="#result" 
+                    hx-trigger="click" 
+                    hx-include="#name"
+                    hx-indicator="#indicator">
+                Say Hello
+            </button>
+            <span id="indicator" class="htmx-indicator" style="margin-left: 10px;">
+                Loading...
+            </span>
+        </div>
+        
+        <div id="result">
+            Results will appear here
+        </div>
+        
+        <div class="footer">
+            <p>Powered by Go + HTMX | DevOps Project</p>
+        </div>
+    </div>
+
+    <script>
+        // Custom HTMX handling for JSON responses
+        htmx.defineExtension('json-enc', {
+            onEvent: function (name, evt) {
+                if (name === "htmx:configRequest") {
+                    evt.detail.headers['Content-Type'] = 'application/json';
+                }
+            }
+        });
+
+        // Process JSON responses
+        document.body.addEventListener('htmx:afterRequest', function(evt) {
+            if (evt.detail.xhr.getResponseHeader('Content-Type') === 'application/json') {
+                const response = JSON.parse(evt.detail.xhr.responseText);
+                const target = document.getElementById(evt.detail.target.id);
+                target.innerHTML = `<strong>${response.message}</strong><br><small>${response.timestamp}</small>`;
+            }
+        });
+    </script>
+</body>
+</html>
