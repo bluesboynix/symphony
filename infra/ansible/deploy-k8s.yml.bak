@@ -1,5 +1,4 @@
----
-- name: Deploy Symphony on Kubernetes locally
+- name: Deploy Symphony on Kubernetes
   hosts: appserver
   become: true
 
@@ -12,4 +11,4 @@
 
     - name: Apply Kubernetes manifest
       command: kubectl apply -f /home/admin/symphony/k8s/symphony.yaml --validate=false
-
+      become: false
